@@ -27,20 +27,6 @@
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 resource "aws_lb" "alb" {
        enable_http2               = true
        internal                   = false
