@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "vpc" {
-  source = "./terraform"
+  source = "./vpc"
 #  public_subnet_cidr_block = "var.public_subnet_cidr_block"
   cidr_block               = var.cidr_block
   public_subnet_cidr_block = var.public_subnet_cidr_block
