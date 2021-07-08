@@ -20,5 +20,12 @@ variable "subnet2"   { default = "subnet-b15ee1ca" }
 variable "vpc_id"    { default = "vpc-a50b15cd"    }
 
 variable "instance_id" { default = "i-0585f4b696c542d3e" }
-
 variable "instance2_id" { default = "i-0585f4b696c542d3e" }
+
+
+############ autoscaling group adding to above loadbalancer #######################
+variable "security_group_id"     { default = "sg-00a45dc0e7c4146aa" }
+variable "subnet1a"  { default = "subnet-168aff5a" }
+variable "subnet2b"  { default = "subnet-b15ee1ca" }
+variable "name"     { default = "harshad" }
+variable "albtargetgroup_arn" { default = "harshad" }

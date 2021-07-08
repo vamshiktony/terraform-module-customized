@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "vpc" {
-  source = "./vpc"
+  source = "./terraform"
 #  public_subnet_cidr_block = "var.public_subnet_cidr_block"
   cidr_block               = var.cidr_block
   public_subnet_cidr_block = var.public_subnet_cidr_block
@@ -47,3 +47,15 @@ module "my_alb" {
   instance2_id = "${module.my_instance2.instance1_id}"
 }
 #vpc_id
+
+###################### autoscaling group for above loadbalancer ###########################
+
+module "my_autoscaling" {
+  source = "./autoscaling"
+  security_group_id   = "${module.vpc.securitygroup_id}"  
+  subnet1a            = "${module.vpc.subnet_id}"
+  subnet2b            = "${module.vpc.subnet2_id}"
+  name               = var.name
+  albtargetgroup_arn =  "${module.my_alb.targetgroup_arn}"
+
+}

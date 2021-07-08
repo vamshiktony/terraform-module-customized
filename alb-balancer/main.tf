@@ -107,3 +107,8 @@ resource "aws_lb_target_group" "my-group" {
       #    + type            = (known after apply)
        # }
     }
+
+
+output "targetgroup_arn" {
+  value = "${aws_lb_target_group.my-group.arn}"
+}
