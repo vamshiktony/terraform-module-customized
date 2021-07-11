@@ -5,18 +5,14 @@ provider aws {
 
 ################################creating eks workernodes and joining with eks_cluster###################################
 resource "aws_eks_node_group" "example" {
-  cluster_name    = "harshad"
-  node_group_name = "harshad"
+  cluster_name    = var.cluster_name
+  node_group_name = var.node_group_name
   disk_size       = 20
   capacity_type   = "SPOT" ######## if you need Demand type please select ON_DEMAND ######################
 #  capacity_type   = "ON_DEMAND"
-  instance_types  = ["t2.medium"]
-#  key_name        = "ramcharan"
+  instance_types  = ["var.instance_type"]
   node_role_arn   = aws_iam_role.example.arn
-  subnet_ids      = [ "subnet-168aff5a","subnet-b76364df" ]
-#  worker_security_group_id = ["sg-12345678"]
-#  vpc_security_group_ids = ["sg-12345678"]
-#  source_security_group_ids = [ "sg-08c51f47131704c99", "sg-08c51f47131704c99" ]
+  subnet_ids      = [ "var.subnet1","var.subnet2" ]
 #  version         = 1.19 
   scaling_config {
     desired_size = 1
@@ -26,14 +22,9 @@ resource "aws_eks_node_group" "example" {
    
 
   remote_access {
-      ec2_ssh_key               = "ramcharan"
-      source_security_group_ids = [ "sg-08c51f47131704c99" ]
+      ec2_ssh_key               = "var.key_name"
+      source_security_group_ids = [ "var.security_group" ]
   }
-
-
-
-
-
 
 
 

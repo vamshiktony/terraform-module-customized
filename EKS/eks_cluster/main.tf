@@ -2,38 +2,21 @@ provider aws {
   region = "ap-south-1"
 }
 
-
-
-
+######################### creating a eks cluster############################################
 
 resource "aws_eks_cluster" "example" {
-  name     = "harshad"
+  name     =  var.cluster_name
   version  =  1.19
   role_arn = aws_iam_role.example.arn
 
   vpc_config {
 #    cluster_security_group_id =  "sg-08c51f47131704c99" 
-    security_group_ids = [ "sg-08c51f47131704c99" ]
+    security_group_ids = [  var.security_group  ]
     endpoint_private_access   = false
     endpoint_public_access    = true
-    subnet_ids = [ "subnet-b76364df", "subnet-168aff5a" ]
+    subnet_ids = [ var.subnet1 , var.subnet2 ]
+#    subnet_ids = [ "subnet-b76364df", "subnet-168aff5a" ]
   }
-
-
-#security_group_ids
-  
-#  vpc_config {
-#          + cluster_security_group_id = (known after apply)
-#          + endpoint_private_access   = false
-#          + endpoint_public_access    = true
-#          + public_access_cidrs       = (known after apply)
-#          + subnet_ids                = [
-#              + "subnet-168aff5a",
-#              + "subnet-b76364df",
-#            ]
-#          + vpc_id                    = (known after apply)
-#        }
-
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
   # Otherwise, EKS will not be able to properly delete EKS managed EC2 infrastructure such as Security Groups.
@@ -93,4 +76,9 @@ output "endpoint" {
 
 output "kubeconfig-certificate-authority-data" {
   value = aws_eks_cluster.example.certificate_authority[0].data
+}
+
+
+output "cluster_name" {
+  value = "${aws_eks_cluster.example.name}"
 }
